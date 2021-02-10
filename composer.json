@@ -2,7 +2,7 @@
     "name": "dotsandlines/cookiebanner",
     "description": "Provides a javascript based cookie banner implementation.",
     "type": "craft-plugin",
-    "version": "1.0.0",
+    "version": "0.1.0",
     "keywords": [
         "craft",
         "cms",
