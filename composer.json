@@ -35,8 +35,8 @@
         "handle": "cookiebanner",
         "developer": "dotsandlines GmbH",
         "developerUrl": "https://dotsandlines.io",
-        "documentationUrl": "???",
-        "changelogUrl": "???",
+        "documentationUrl": "https://github.com/dotsandlines-tech/craft-eu-cookie-banner",
+        "changelogUrl": "https://github.com/dotsandlines-tech/craft-eu-cookie-banner",
 		"class": "dotsandlines\\cookiebanner\\Cookiebanner",
 		"components": {
             "renderingService": "dotsandlines\\cookiebanner\\services\\RenderingService"
