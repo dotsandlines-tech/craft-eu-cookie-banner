@@ -1,0 +1,43 @@
+{  "extends": "stylelint-config-sass-guidelines",
+    "rules": {
+        "no-empty-source": null,
+        "string-quotes": "double",
+        "indentation": "tab",
+        "scss/at-extend-no-missing-placeholder": null,
+        "selector-max-compound-selectors": null,
+        "max-nesting-depth": null,
+        "selector-no-qualifying-type": null,
+        "selector-max-id": null,
+        "order/properties-alphabetical-order": null,
+        "at-rule-no-unknown": [
+			true,
+			{
+                "ignoreAtRules": [
+					"extends",
+					"at-root",
+					"debug",
+					"warn",
+					"error",
+					"if",
+					"else",
+					"for",
+					"each",
+					"while",
+					"mixin",
+					"include",
+					"content",
+					"return",
+					"function",
+					"tailwind",
+					"apply",
+					"responsive",
+					"variants",
+					"screen"
+				]
+			}
+		]
+	},
+    "ignoreFiles": [
+        "**/*.js"
+	]
+}

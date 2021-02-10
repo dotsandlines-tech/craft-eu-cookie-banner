@@ -1,0 +1,37 @@
+
+{% set settings = craft.app.getModule('cookiebanner').getSettings() %}
+
+<style>
+	#cookiebar .cookiebar-categories .category-wrapper input:checked + label::before {
+		background-color: {{ settings.cookieBarPrimaryColor }};
+		border-color: {{ settings.cookieBarPrimaryColor }};
+	}
+
+	#cookiebar .cookiebar-categories .category-wrapper label::before {
+		border-color: {{ settings.cookieBarPrimaryColor }};
+	}
+
+	#cookieSettings {
+		color: {{ settings.cookieBarTextColor }};
+		background-color: {{ settings.cookieBarBackgroundColor }};
+	}
+
+	#cookieSettings .gear {
+		background-color: {{ settings.cookieBarBackgroundColor }};
+		border-color: {{ settings.cookieBarPrimaryColor }};
+	}
+
+	#cookieSettings .gear::before, #cookieSettings .gear::after {
+		color: {{ settings.cookieBarPrimaryColor }};
+	}
+
+	#cookiebar {
+		color: {{ settings.cookieBarTextColor }};
+		background-color: {{ settings.cookieBarBackgroundColor }};
+	}
+
+	#cookiebar .btn-primary {
+		color: {{ settings.cookieBarBackgroundColor }};
+		background-color: {{ settings.cookieBarPrimaryColor }};
+	}
+</style>

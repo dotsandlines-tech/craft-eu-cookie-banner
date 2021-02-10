@@ -1,0 +1,27 @@
+	
+	
+{% set settings = craft.app.getModule('cookiebanner').getSettings() %}
+
+{% set categories = settings.cookieBarCategories %}
+
+
+<script>
+	window.cookiebanner = window.cookiebanner || [];
+	
+	{% for category in categories %}
+		{% if category.categoryName is defined and category.scripts is defined %}
+	window.cookiebanner['{{category.categoryName|kebab}}'] = function() {
+		{{ category.scripts|raw }}
+	}
+		{% endif %}
+	{% endfor %}
+
+	{% if settings.cookieBarAllScripts %}
+	window.cookiebanner['all'] = function() {
+		{{ settings.cookieBarAllScripts|raw }}
+	}
+	{% endif %}
+
+	
+</script>
+	

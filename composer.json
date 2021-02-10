@@ -1,0 +1,45 @@
+{
+    "name": "dotsandlines/cookiebanner",
+    "description": "Provides a javascript based cookie banner implementation.",
+    "type": "craft-plugin",
+    "version": "1.0.0",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+		"eu cookie banner",
+		"cookie banner"
+    ],
+    "support": {
+        "docs": "https://www.dotsandlines.io",
+        "issues": "https://www.dotsandlines.io"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "dotsandlines GmbH",
+            "homepage": "https://dotsandlines.io"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+          "dotsandlines\\cookiebanner\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Cookiebanner",
+        "handle": "cookiebanner",
+        "developer": "dotsandlines GmbH",
+        "developerUrl": "https://dotsandlines.io",
+        "documentationUrl": "???",
+        "changelogUrl": "???",
+		"class": "dotsandlines\\cookiebanner\\Cookiebanner",
+		"components": {
+            "renderingService": "dotsandlines\\cookiebanner\\services\\RenderingService"
+        }
+    }
+}

@@ -1,0 +1,75 @@
+{#
+/**
+ * Cookiebanner plugin for Craft CMS 3.x
+ *
+ * Cookiebanner cookiebanner.twig
+ *
+ * @author    dotsandlines GmbH
+ * @copyright Copyright (c) 2020 dotsandlines GmbH
+ * @link      https://dotsandlines.io
+ * @package   Cookiebanner
+ * @since     1.0.0
+ */
+#}
+
+{% set settings = craft.app.getModule('cookiebanner').getSettings() %}
+
+{# receive privacy entry and url #}
+{% set privacyPolicyEntryId = settings.cookieBarPrivacyPolicyEntryId ?? "-1" %}
+{% set privacyPolicyEntry = craft.entries.id(privacyPolicyEntryId).one() %}
+{% set privacyPolicyUrl = privacyPolicyEntry.getUrl() ?? false %}
+
+{{craft.cookiebanner.renderCSSDefaultColorStylings}}
+
+{# write scripts inline #}
+{{craft.cookiebanner.renderJavaScriptOfCategories}}
+
+{% do view.registerAssetBundle("dotsandlines\\cookiebanner\\assetbundles\\cookiebanner\\CookiebannerAsset") %}
+
+<div id="cookieSettings" class="cb-fixed cb-hidden cb-flex cb-items-center cb-justify-center">
+	<div class="gear"></div>
+</div>
+<div id="cookiebar" class="cb-w-full cb-fixed cb-inset-x-auto cb-bottom-0 cb-flex cb-flex-col xl:cb-flex-row cb-p-4 xl:cb-p-8 cb-hidden" data-cookiebar-type="{{settings.cookieEnableBarCategories}}" data-expire="{{settings.cookieExpiry}}">
+	<div class="cookiebar-content cb-w-full xl:cb-w-1/2">
+		{% if settings.cookieBarHeadline %}
+			<h2 class="cb-mb-4">{{settings.cookieBarHeadline}}</h2>
+		{% endif %}
+		{{settings.cookieBarText ?? ""}}
+		{% if privacyPolicyUrl %}
+			<a href="{{privacyPolicyUrl}}" title="{{settings.cookieBarPrivacyPolicyTitle}}" class="cb-underline">{{settings.cookieBarPrivacyPolicyTitle}}</a>
+		{% endif %}
+	</div>
+
+	<div class="cookiebar-selection cb-w-full xl:cb-w-1/2 cb-flex cb-flex-col xl:cb-flex-row xl:cb-px-4 cb-justify-end xl:cb-items-center">
+		{% if settings.cookieEnableBarCategories %}
+			<div class="cookiebar-categories cb-flex-grow cb-flex cb-flex-col md:cb-flex-row cb-justify-start xl:cb-justify-center xxl:cb-justify-end">
+				{% if settings.cookieBarFunctionalCookiesTitle %}
+					<div class="category-wrapper functional">
+						<input type="checkbox" id="{{settings.cookieBarFunctionalCookiesTitle | kebab}}" name="{{settings.cookieBarFunctionalCookiesTitle | kebab}}" checked disabled/>
+						<label for="{{settings.cookieBarFunctionalCookiesTitle | kebab}}">{{settings.cookieBarFunctionalCookiesTitle}}</label>
+					</div>
+				{% endif %}
+
+				{% if settings.cookieBarCategories is not empty %}
+					{% for cat in settings.cookieBarCategories %}
+						{% if cat.categoryName %}
+							<div class="category-wrapper">
+								<input type="checkbox" id="{{cat.categoryName | kebab}}" name="{{cat.categoryName | kebab}}"/>
+								<label for="{{cat.categoryName | kebab}}">{{cat.categoryName}}</label>
+							</div>
+						{% endif %}
+					{% endfor %}
+				{% endif %}
+				
+			</div>
+			<a href="javascript:void(0)" class="btn btn-primary" id="savePreferences">{{settings.cookieBarSavePreferencesTitle}}</a>
+		{% else %}
+			<div class="cookiebar-categories cb-flex-grow cb-flex cb-flex-col md:cb-flex-row cb-justify-center md:cb-justify-end cb-items-center">
+				{% if settings.cookieBarFunctionalCookiesTitle %}
+					<a href="javascript:void(0)" class="btn btn-flat" id="deny">{{settings.cookieBarFunctionalCookiesTitle}}</a>
+				{% endif %}
+				<a href="javascript:void(0)" class="btn btn-primary cb-mr-0 md:cb-mr-4" id="submitAll">{{settings.cookieBarSavePreferencesTitle}}</a>
+			</div>
+		{% endif %}
+	</div>
+</div>

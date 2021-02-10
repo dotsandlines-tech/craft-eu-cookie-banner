@@ -1,0 +1,195 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * Cookiebanner plugin for Craft CMS 3.x
+ *
+ * Cookiebanner cookiebanner.twig
+ *
+ * @author    dotsandlines GmbH
+ * @copyright Copyright (c) 2020 dotsandlines GmbH
+ * @link      https://dotsandlines.io
+ * @package   Cookiebanner
+ * @since     1.0.0
+ */
+#}
+
+{% extends "_layouts/cp" %}
+{% import "_includes/forms" as forms %}
+
+{% do view.registerAssetBundle("dotsandlines\\cookiebanner\\assetbundles\\cookiebannercpsection\\CookiebannerCPSectionAsset") %}
+
+{% set fullPageForm = true %}
+
+{% set title = "Cookiebanner" %}
+
+{% set pluginCpUrl = url('cookiebanner') %}
+
+{% set iconUrl = view.getAssetManager().getPublishedUrl('@dotsandlines/cookiebanner/assetbundles/cookiebannercpsection/dist', true) ~ '/img/Cookiebanner-icon.svg' %}
+
+{% set settings = craft.app.getModule('cookiebanner').getSettings() %}
+
+
+{% set tabs = {
+    general: {label: 'General Settings'|t('cookiebanner'), url: '#general-settings'},
+    scripts: {label: 'Scripts'|t('cookiebanner'), url: '#scripts'},
+} %}
+
+
+{% block content %}
+
+
+	{{ actionInput('cookiebanner/cookiebanner/submit') }}
+
+    <div id="general-settings">
+		{{ forms.lightswitchField({
+			label: "Enable Cookiebar"|t('cookiebanner'),
+			name: 'settings[enableCookiebar]',
+			on: settings.enableCookiebar,
+		}) }}
+
+		{{ forms.textField({
+			type: 'number',
+			unit: "days"|t('cookiebanner'),
+			label: "Cookie Expiry"|t('cookiebanner'),
+			instructions: "The number of days, the cookie decision will be saved."|t('cookiebanner'),
+			name: 'settings[cookieExpiry]',
+			min: 1,
+			max: 365,
+			value: settings.cookieExpiry ?? 365,
+			errors: settings.getErrors('cookieExpiry'),
+			required: true,
+		}) }}
+
+
+		{{ forms.textField({
+			label: "Cookiebar Headline"|t('cookiebanner'),
+			name: 'settings[cookieBarHeadline]',
+			value: settings.cookieBarHeadline,
+			errors: settings.getErrors('cookieBarHeadline')
+		}) }}
+
+		{{ forms.textarea({
+			label: "Cookiebar Text"|t('cookiebanner'),
+			name: 'settings[cookieBarText]',
+			value: settings.cookieBarText,
+			rows: 3,
+			errors: settings.getErrors('cookieBarText')
+		}) }}
+
+		{{ forms.elementSelectField({
+			label: "Privacy Policy Element"|t('cookiebanner'),
+			name: 'settings[cookieBarPrivacyPolicyEntryId]',
+			selectionLabel: "Choose"|t('cookiebanner'),
+			elementType: 'craft\\elements\\Entry',
+			elements: craft.entries.id(settings.cookieBarPrivacyPolicyEntryId ?? []),
+			limit: 1
+		}) }}
+
+		{{ forms.textField({
+			label: "Privacy Policy Title"|t('cookiebanner'),
+			name: 'settings[cookieBarPrivacyPolicyTitle]',
+			value: settings.cookieBarPrivacyPolicyTitle,
+			errors: settings.getErrors('cookieBarPrivacyPolicyTitle')
+		}) }}
+
+		{{ forms.textField({
+			label: "Functional Cookies Title"|t('cookiebanner'),
+			name: 'settings[cookieBarFunctionalCookiesTitle]',
+			value: settings.cookieBarFunctionalCookiesTitle,
+			errors: settings.getErrors('cookieBarFunctionalCookiesTitle')
+		}) }}
+
+		{{ forms.textField({
+			label: "Save Preferences Title"|t('cookiebanner'),
+			name: 'settings[cookieBarSavePreferencesTitle]',
+			value: settings.cookieBarSavePreferencesTitle,
+			errors: settings.getErrors('cookieBarSavePreferencesTitle')
+		}) }}
+
+		{{ forms.textField({
+			label: "Accept All Title"|t('cookiebanner'),
+			name: 'settings[cookieBarAcceptAllTitle]',
+			value: settings.cookieBarAcceptAllTitle,
+			errors: settings.getErrors('cookieBarAcceptAllTitle')
+		}) }}
+
+
+		<h2>
+			Color Settings
+		</h2>
+		{{ forms.textField({
+			label: "Primary Color"|t('cookiebanner'),
+			name: 'settings[cookieBarPrimaryColor]',
+			value: settings.cookieBarPrimaryColor ?? "#2e40da",
+			errors: settings.getErrors('cookieBarPrimaryColor')
+		}) }}
+
+		{{ forms.textField({
+			label: "Background Color"|t('cookiebanner'),
+			name: 'settings[cookieBarBackgroundColor]',
+			value: settings.cookieBarBackgroundColor ?? "#ff0000",
+			errors: settings.getErrors('cookieBarBackgroundColor')
+		}) }}
+
+		{{ forms.textField({
+			label: "Text Color"|t('cookiebanner'),
+			name: 'settings[cookieBarTextColor]',
+			value: settings.cookieBarTextColor ?? "#ff0000",
+			errors: settings.getErrors('cookieBarTextColor')
+		}) }}
+	</div>
+
+	<div id="scripts" class="hidden">
+		{{ forms.lightswitchField({
+			label: "Use Categories"|t('cookiebanner'),
+			name: 'settings[cookieEnableBarCategories]',
+			on: settings.cookieEnableBarCategories,
+		}) }}
+
+		{% set cols = [] %}
+		{% set cols = cols|merge({
+			categoryName: {
+				type: 'singleline',
+				heading: 'Category Name'|t('cookiebanner'),
+			}
+		}) %}
+		{% set cols = cols|merge({
+			scripts: {
+				type: 'textarea',
+				rows: '3',
+				heading: 'Scripts'|t('cookiebanner'),
+			}
+		}) %}
+
+
+		{{ forms.editableTableField({
+			id: "categoriesAndScripts",
+			label: "Categories"|t('cookiebanner'),
+			instructions: "Set categories and associate scripts."|t('cookiebanner'),
+			name: 'settings[cookieBarCategories]',
+			cols: cols,
+			rows: settings.cookieBarCategories,
+			addRowLabel: "Add a new Category"|t('blitz'),
+		}) }}
+
+		<div class="field">
+			<div class="heading">
+				<label>
+					{{"All Scripts"|t('cookiebanner')}}
+				</label>	
+			</div>
+			<div class="instructions">
+				<p>{{"Will be used when categories are disabled"|t('cookiebanner')}}</p>
+			</div>
+			{{ forms.textarea({
+				label: "All Scripts"|t('cookiebanner'),
+				name: 'settings[cookieBarAllScripts]',
+				value: settings.cookieBarAllScripts,
+				errors: settings.getErrors('cookieBarAllScripts'),
+				rows: 6
+			}) }}
+		</div>
+
+	</div>
+	
+{% endblock %}
