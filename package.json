@@ -2,7 +2,7 @@
 	"name": "eu-cookie-banner",
 	"version": "0.1.0",
 	"description": "frontend based cookiebanner implementation with script blocker",
-	"author": "dotsandlines",
+	"author": "dotsandlines GmbH",
 	"private": true,
 	"scripts": {
 		"dev": "npm run development",
