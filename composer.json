@@ -1,5 +1,5 @@
 {
-    "name": "dotsandlines/eu-cookie-banner",
+    "name": "dotsandlines/cookie-banner",
     "description": "Provides a javascript based cookie banner implementation.",
     "type": "craft-plugin",
     "keywords": [
