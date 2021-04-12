@@ -4,7 +4,7 @@ module.exports = {
 		"./templates/**/*.twig",
 		"./src/**/*.js",
 	],
-	prefix: 'cb-',
+	prefix: "cb-",
 	future: {
 		removeDeprecatedGapUtilities: true,
 		purgeLayersByDefault: true,
@@ -13,8 +13,11 @@ module.exports = {
 		extend: {},
 		colors: {
 			blue: "#2e40da",
-			white: "#ffffff"
+			white: "#ffffff",
 		},
+	},
+	corePlugins: {
+		preflight: false,
 	},
 	variants: {},
 	plugins: [],
