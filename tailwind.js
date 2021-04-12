@@ -1,7 +1,7 @@
 module.exports = {
 	purge: [
-		"./templates/**/*.html",
-		"./templates/**/*.twig",
+		"./src/templates/**/*.html",
+		"./src/templates/**/*.twig",
 		"./src/**/*.js",
 	],
 	prefix: "cb-",
